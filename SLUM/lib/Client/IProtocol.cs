@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SLUM.lib.Client.Protocol;
 
-namespace SLUM.lib.Client.Protocol
+namespace SLUM.lib.Client
 {
     public interface IProtocol
     {
@@ -12,5 +13,8 @@ namespace SLUM.lib.Client.Protocol
         public uint Version { get; }
 
         public NetworkProtocol Format { get; }
+
+        void ReadClient();
+        void TickStatus();
     }
 }

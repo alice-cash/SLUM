@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Server xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- This is the name of your server, for internal use. -->
+  <ServerName>Tortoise Main Server</ServerName>
+
+  <!-- This is the port the Server listens on for client connections. -->
+  <ClientListenPort>25565</ClientListenPort>
+
+  <!-- This is the address the Server listens on for clients connections.
+ 			0.0.0.0 is any address -->
+  <ClientListenAddress>127.0.0.1</ClientListenAddress>
+
+  <!-- This is the port the server listens on for other server connections. -->
+  <ServerListenPort>9994</ServerListenPort>
+
+  <!-- This is the address the server listens on for server connections.
+ 			0.0.0.0 is any IPv4 address.
+			:: is any IPv4 and IPv6 address.
+ 			It is recommended to use 127.0.0.1 unless you have a multi-server configuration.
+			It is also recommended that you use private addressing in a multi-server configuration, if possible.-->
+  <ServerListenAddress>127.0.0.1</ServerListenAddress>
+
+  <!-- This is the list of IP addresses and host masks the system accepts connections from for server connections.
+		   
+			It also accepts fully qualified domain names.
+ 			0.0.0.0 is any IPv4 address. 
+			:: is any IPv4 and IPv6 address.
+			SomeGameServer.MyGameSite.com will use the first IP returned by this domain.
+			-->
+  <ServerListenAcceptedAddresses>
+    <!-- This is the IPv6 Listen all -->
+    <string>::</string>
+    <!-- Some examples:
+		<string>192.168.1.10</string>
+		<string>192.168.1.11</string>
+		<string>198:14::48:1dd:</string>
+		<string>MyGameServer03.MyGameSite.com</string>
+		-->
+
+    <!-- Go to http://stormraidergames.com/Tortoise-Poll for more info. -->
+    <!-- <string>Tortoisepoll.stormraidergames.com</string> -->
+  </ServerListenAcceptedAddresses>
+
+  <!-- This is the port that Mysql listens on. Leave alone if you are not sure. -->
+  <MysqlPort>3306</MysqlPort>
+
+  <!-- This is the address to connect to Mysql. Leave alone if you are not sure. -->
+  <MysqlAddress>127.0.0.1</MysqlAddress>
+
+  <!-- This is the Database for user account information. -->
+  <MysqlAccountDatabse>TortoiseAccounts</MysqlAccountDatabse>
+
+  <!-- This is the Database for server information. -->
+  <MysqlServerDatabse>TortoiseServers</MysqlServerDatabse>
+
+  <!-- This is the Database user. It is NOT recomended to use your root mysql account. -->
+  <MysqlUser>{EDIT ME}</MysqlUser>
+
+  <!-- This is the Database user's Password. -->
+  <MysqlPass>{EDIT ME}</MysqlPass>
+
+  <!-- This is the number of threads for the system to create, for listining to clients. -->
+  <ClientListenThreads>2</ClientListenThreads>
+
+  <!-- This is the number of users each thread will handle. -->
+  <MaxUsersPerThread>1000</MaxUsersPerThread>
+
+  <!-- This is the Clients Major version number. -->
+  <ClientMajor>0</ClientMajor>
+  <!-- This is the Clients Minor version number. -->
+  <CLientMinor>1</CLientMinor>
+  <!-- This is the Clients Minor version number. -->
+  <CLientBuild>1</CLientBuild>
+  <!-- This is the Clients Revision version number. -->
+  <ClientRevision>0</ClientRevision>
+
+</Server>

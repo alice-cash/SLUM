@@ -4,8 +4,12 @@ using System.Text;
 
 namespace SLUM.lib.Client.Protocol
 {
-    public interface INetConnection
+    public enum ClientState
     {
-        void SendPacket(byte[] data);
+        Handshaking,
+        Status,
+        Login,
+        Play,
+        Any
     }
 }

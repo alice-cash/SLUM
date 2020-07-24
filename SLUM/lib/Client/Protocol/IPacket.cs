@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SLUM.lib.Data;
 
 namespace SLUM.lib.Client.Protocol
 {
-    public enum NetworkProtocol
+    public interface IPacket
     {
-        Unknown,
-        JavaAlpha,
-        JavaNetty,
-        BedrockRaknet
+
+        public void SendPacket(RemoteClient client);
+
     }
 }

@@ -1,0 +1,70 @@
+﻿#-----------------------------------------------------------------------------------------------#
+# Copyright 2012 Matthew Cash. All rights reserved.												#
+#																								#
+# Redistribution and use in source and binary forms, with or without modification, are			#
+# permitted provided that the following conditions are met:										#
+#																								#
+#    1. Redistributions of source code must retain the above copyright notice, this list of		#
+#       conditions and the following disclaimer.												#
+#																								#
+#    2. Redistributions in binary form must reproduce the above copyright notice, this list		#
+#       of conditions and the following disclaimer in the documentation and/or other materials	#
+#       provided with the distribution.															#
+#																								#
+# THIS SOFTWARE IS PROVIDED BY Matthew Cash ``AS IS'' AND ANY EXPRESS OR IMPLIED				#
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND		#
+# FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Matthew Cash OR			#
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR			#
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR		#
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON		#
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING			#
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF			#
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.													#
+#																								#
+# The views and conclusions contained in the software and documentation are those of the		#
+# authors and should not be interpreted as representing official policies, either expressed		#
+# or implied, of Matthew Cash.																	#
+#-----------------------------------------------------------------------------------------------#
+
+# This contains all strings used by the client.
+
+#-----------------------------------------------------------------------------------------------#
+# Lines starting with a # are ignored															#
+# I keep a standard with lines that have variables. They use the String.Format form tomake		#
+# things easy. There will be a comment before it specifying what the number may contain			#
+# within the string.																			#
+# if you use curly brackets, you must double them up											#
+# "There is only {{one}} set of brackets here. There is only a single bracket here: {{"			#
+#-----------------------------------------------------------------------------------------------#
+
+# There are 2 special ones that should always exist
+# This is the name Presented to the user
+Language_DisplayName 		English
+Language_Name		 		en-US
+
+# This is the error message the user gets for a language key word not existing in the language file
+# $0 is the Name of the Localization String IE: 'English'
+Error_No_Local 	There is no Localization for '{0}'
+
+####################
+# Console Messages #
+####################
+# $0 is the ToString() of the exception
+Console_Function_Exception {0}
+# $0 is the value they entered. $1 is the name of the variable. The \n is required on the end!
+Console_Validation_Failure The text '{1}' is not valid for {0}\n
+# $0 is the text they enterd.
+Console_Unknown_Varable '{0}' Unknown command or variable.
+
+Console_Help_Help Returns information on avalaible commands or detailed help on individual commands
+
+
+######################
+# Debugging Commands #
+######################
+DEBUG_DB_GRABUSR_HELP DEBUG COMMAND!\n\tReturns an account from the database given a username.\n\tUsage: debug_db_grabusr username
+DEBUG_DB_GRABUSR_NOFIND No account found for username {0}
+DEBUG_DB_GRABUSR_FIND Found: ID={0}, username={1}, password={2}
+
+DEBUGGING_LEVEL_HELP Controls the ammount of information displayed for debugging.
+

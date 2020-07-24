@@ -1,53 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using SLUM.lib.Exception;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
+//using System.IO;
+//using SLUM.lib.Exception;
 
-namespace SLUM.lib.Data.DataTypes
-{
-    public static class VarInt
-    {
-        
-        public static int readVarInt(BinaryReader bs)
-        {
-            if (bs == null) throw new ArgumentNullException(nameof(bs));
-            
-            int numRead = 0;
-            int result = 0;
-            byte read;
-            do
-            {
-                read = bs.ReadByte();
-                int value = (read & 0b01111111);
-                result |= (value << (7 * numRead));
+//namespace SLUM.lib.Data.DataTypes
+//{
+//    public struct VarInt: IData
+//    {
 
-                numRead++;
-                if (numRead > 5)
-                {
-                    throw new ByteParseException("VarInt is too big");
-                }
-            } while ((read & 0b10000000) != 0);
+//        public int Value
+//        {
+//            get { return _value; }
+//            set
+//            {
+//                _cache_dirty = true;
+//                _value = value;
+//            }
+//        }
 
-            return result;
-        }
+//        public byte[] Data
+//        {
+//            get
+//            {
+//                if (_cache_dirty)
+//                {
+//                    _cache = WriteVarInt(_value);
+//                    _cache_dirty = false;
+//                }
+//                return _cache;
+//            }
+//            set
+//            {
+//                if (value.Length > 5) throw new ByteParseException("Array is to long");
+//                _cache = value;
+//                _value = ReadVarInt(_cache);
+//            }
+//        }
 
-        public static void writeVarInt(int value, BinaryWriter bw)
-        {
-            if (bw == null) throw new ArgumentNullException(nameof(bw));
+//        public int Length { get { return Data.Length; } }
 
-            uint workingValue = (uint)value;
-            do
-            {
-                byte temp = (byte)(workingValue & 0b01111111);
+//        private int _value;
+//        private byte[] _cache;
+//        private bool _cache_dirty;
 
-                workingValue >>= 7;
-                if (workingValue != 0)
-                {
-                    temp |= 0b10000000;
-                }
-                bw.Write(temp);
-            } while (workingValue != 0);
-        }
-    }
-}
+//        public VarInt(int val) : this()
+//        {
+//            Value = val;
+//        }
+
+//        public byte[] GeneratePacketData()
+//        {
+//            return Data;
+//        }
+
+
+//        public static implicit operator VarInt(int value) => new VarInt(value);
+//        public static implicit operator int(VarInt value) => value.Value;
+
+  
+
+
+
+//    }
+//}
