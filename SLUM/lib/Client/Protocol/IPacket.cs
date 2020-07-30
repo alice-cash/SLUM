@@ -7,8 +7,10 @@ namespace SLUM.lib.Client.Protocol
 {
     public interface IPacket
     {
-
-        public void SendPacket(RemoteClient client);
+        public bool PacketGood { get; set; }
+        public int PacketLength { get; set; }
+        public static int PacketID { get; }
+        public int GetPacketID { get; }
 
     }
 }

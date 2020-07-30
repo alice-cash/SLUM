@@ -1,16 +1,15 @@
 ﻿using SLUM.lib.Client.Protocol.Netty;
 
-namespace SLUM.lib.Client.Protocol.Netty736
+namespace SLUM.lib.Client.Protocol.Netty578
 {
     /// <summary>
-    /// Protocol Handling for Release 1.16.1
+    /// Protocol Handling for Release 1.15.2
     /// </summary>
     public class Protocol : Netty.Protocol
     {
         public Protocol(RemoteClient client) : base(client) { }
 
-        public override uint Version => 736;
-
+        public override uint Version => 578;
         protected override void SetupAllowedPacket()
         {
             switch (_client.State)
@@ -41,6 +40,5 @@ namespace SLUM.lib.Client.Protocol.Netty736
 
             return false;
         }
-
     }
 }

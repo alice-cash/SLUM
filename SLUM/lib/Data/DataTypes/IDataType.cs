@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SLUM.lib.Data.DataTypes
-{/*
-    public interface IData
+{
+    interface IDataType
     {
-        public byte[] GeneratePacketData();
-
-    }*/
+    }
 }

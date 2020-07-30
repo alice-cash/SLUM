@@ -16,5 +16,6 @@ namespace SLUM.lib.Client
 
         void ReadClient();
         void TickStatus();
+        void TickLogin();
     }
 }

@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using SLUM.lib.Client;
+using SLUM.lib.Client.Protocol.Netty;
 using SLUM.lib.Data.DataTypes;
 
 namespace SLUM.lib.Data
@@ -27,7 +28,7 @@ namespace SLUM.lib.Data
 
         public void Flush()
         {
-            _connection.WriteBytes(_data.ToArray());
+            _connection.WritePacket(_data.ToArray());
             _data.Clear();
         }
 
@@ -129,24 +130,58 @@ namespace SLUM.lib.Data
             AddRange(GetBytes(value), prepend);
         }
 
-
-        public void Write(string value, bool VariableLength, bool prepend = false)
+        public void Write(uint value, bool prepend = false)
         {
-            writeString(value, VariableLength, prepend);
+            AddRange(GetBytes(value), prepend);
         }
 
-        public void Write(int value, bool VariableLength, bool prepend = false)
+        public void Write(ulong value, bool prepend = false)
         {
-            if (VariableLength) writeVarInt(value, prepend);
-            else AddRange(GetBytes(value), prepend);
+            AddRange(GetBytes(value), prepend);
         }
 
-        public void Write(long value, bool VariableLength, bool prepend = false)
+        public void Write(short value, bool prepend = false)
         {
-            if (VariableLength) writeVarLong(value, prepend);
-            else AddRange( GetBytes(value), prepend);
+            AddRange(GetBytes(value), prepend);
         }
 
+        public void Write(sbyte  value, bool prepend = false)
+        {
+            Add((byte)value, prepend);
+        }
+
+        public void Write(int value, bool prepend = false)
+        {
+            AddRange(GetBytes(value), prepend);
+        }
+
+        public void Write(long value, bool prepend = false)
+        {
+            AddRange(GetBytes(value), prepend);
+        }
+
+        public void Write(VarString value, bool prepend = false)
+        {
+            writeString(value, prepend);
+        }
+        public void Write(FixedString value, bool prepend = false)
+        {
+            writeString(value, prepend);
+        }
+
+        public void Write(VarInt value, bool prepend = false)
+        {
+            writeVarInt(value, prepend);
+        }
+        public void Write(VarLong value, bool prepend = false)
+        {
+            writeVarLong(value, prepend);
+        }
+
+        public void Write(NextState nextState)
+        {
+            Write(new VarInt((int)nextState));
+        }
         private void writeVarInt(int value, bool prepend)
         {
             byte[] data = new byte[5];
@@ -164,6 +199,7 @@ namespace SLUM.lib.Data
                 data[length] = temp;
                 length++;
             } while (workingValue != 0);
+
             byte[] return_data = new byte[length];
             for (byte i = 0; i < length; i++)
             {
@@ -203,15 +239,23 @@ namespace SLUM.lib.Data
                 _data.AddRange(return_data);
         }
 
-        private void writeString(string value, bool variable, bool prepend)
+        private void writeString(VarString value, bool prepend)
         {
             byte[] data = _encoder.GetBytes(value);
 
-            if(variable)
-                writeVarInt(data.Length, prepend);
+            writeVarInt(data.Length, prepend);
+
+            if (prepend)
+                _data.InsertRange(0, data);
             else
-                Write(data.Length, false, prepend);
-            if (prepend) 
+                _data.AddRange(data);
+        }
+        private void writeString(FixedString value, bool prepend)
+        {
+            byte[] data = _encoder.GetBytes(value);
+
+            Write(data.Length, prepend);
+            if (prepend)
                 _data.InsertRange(0, data);
             else
                 _data.AddRange(data);
@@ -233,5 +277,7 @@ namespace SLUM.lib.Data
             gZipStream.Dispose();
             memoryStream.Dispose();
         }
+
+
     }
 }

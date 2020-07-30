@@ -15,7 +15,7 @@ namespace SLUM.lib.Client
         int BytesAvaliable { get; }
         Stream Stream { get; }
 
-        void WriteBytes(byte[] data);
+        void WritePacket(byte[] data);
         byte[] ReadBytes(int length, bool peak = false);
 
         void Disconnect();

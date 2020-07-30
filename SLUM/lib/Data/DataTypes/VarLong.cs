@@ -6,27 +6,27 @@ using SLUM.lib.Exception;
 
 namespace SLUM.lib.Data.DataTypes
 {
-    public struct VarInt: IDataType
+    public struct VarLong : IDataType
     {
 
-        int _value;
+        long _value;
 
         public byte PacketSize
         {
             get
             {
                 byte length = 0;
-                uint workingValue = (uint)Value;
+                ulong workingValue = (ulong)Value;
                 do
                 {
                     workingValue >>= 7;
                     length++;
                 } while (workingValue != 0);
                 return length;
-            } 
+            }
         }
 
-        public int Value
+        public long Value
         {
             get { return _value; }
             set
@@ -35,13 +35,13 @@ namespace SLUM.lib.Data.DataTypes
             }
         }
 
-        public VarInt(int value) : this()
+        public VarLong(long value) : this()
         {
             Value = value;
         }
 
-        public static implicit operator VarInt(int value) => new VarInt(value);
-        public static implicit operator int(VarInt value) => value.Value;
+        public static implicit operator VarLong(long value) => new VarLong(value);
+        public static implicit operator long(VarLong value) => value.Value;
 
         
 

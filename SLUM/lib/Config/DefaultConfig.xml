@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Server xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <!-- This is the name of your server, for internal use. -->
-  <ServerName>Tortoise Main Server</ServerName>
+  <ServerName>SLUM Main Server</ServerName>
 
   <!-- This is the port the Server listens on for client connections. -->
   <ClientListenPort>25565</ClientListenPort>
@@ -37,8 +37,6 @@
 		<string>MyGameServer03.MyGameSite.com</string>
 		-->
 
-    <!-- Go to http://stormraidergames.com/Tortoise-Poll for more info. -->
-    <!-- <string>Tortoisepoll.stormraidergames.com</string> -->
   </ServerListenAcceptedAddresses>
 
   <!-- This is the port that Mysql listens on. Leave alone if you are not sure. -->
@@ -48,10 +46,10 @@
   <MysqlAddress>127.0.0.1</MysqlAddress>
 
   <!-- This is the Database for user account information. -->
-  <MysqlAccountDatabse>TortoiseAccounts</MysqlAccountDatabse>
+  <MysqlAccountDatabse>SLUM_ACCOUNTS</MysqlAccountDatabse>
 
   <!-- This is the Database for server information. -->
-  <MysqlServerDatabse>TortoiseServers</MysqlServerDatabse>
+  <MysqlServerDatabse>SLUM_DB</MysqlServerDatabse>
 
   <!-- This is the Database user. It is NOT recomended to use your root mysql account. -->
   <MysqlUser>{EDIT ME}</MysqlUser>

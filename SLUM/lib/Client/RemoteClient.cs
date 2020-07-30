@@ -104,7 +104,19 @@ namespace SLUM.lib.Client
 
         private void TickLogin()
         {
+            if (Data.LastLogicState != ClientState.Status)
+            {
+                Data.LastLogicState = ClientState.Status;
+                Data.LoginStart = false;
+                Data.LoginEncryptionResponseRequired = false;
+                Data.LoginRespondRequired = false;
+                Data.LoginSecret = new byte[0];
+                Data.LoginVerifyToken = new byte[0];
+                Data.Token = new byte[0];
 
+            }
+
+            ClientProtocol.TickLogin();
         }
 
         private void TickPlay()

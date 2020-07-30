@@ -6,51 +6,23 @@ using SLUM.lib.Data.DataTypes;
 
 namespace SLUM.lib.Client.Protocol.Netty.HandshakeState.ServerBound
 {
-    public class Handshake : Packet
+    public struct Handshake : IPacket
     {
-        public Int32 ProtocolVersion;
-        public string ServerAddress;
-        public ushort ServerPort;
-        public NextState NextState;
 
-        public static new int PacketID => 0x00;
+        public static int PacketID => 0x00;
+        public int GetPacketID => PacketID;
 
-        public Handshake(RemoteClient client) : base(client)
-        {
-        }
+        public bool PacketGood { get; set; }
+        public int PacketLength { get; set; }
 
-        public override void TryReadStream(RemoteClient client)
-        {
-            PacketGood = _TryRead(client);
-        }
+        [PacketField(0, Types.VarInt)]
+        public VarInt ProtocolVersion { get; set; }
+        [PacketField(1, Types.VarString, 255)] 
+        public VarString ServerAddress { get; set; }
+        [PacketField(2, Types.UShort)]
+        public ushort ServerPort { get; set; }
+        [PacketField(3, Types.EnumNextState)]
+        public NextState NextState { get; set; }
 
-        private bool _TryRead(RemoteClient client)
-        {
-
-            var readVarInt = client.StreamReader.ReadVarInt();
-            if (!readVarInt) return false;
-            ProtocolVersion = readVarInt.Result;
-
-            var readVarString = client.StreamReader.ReadVarString();
-            if (!readVarString) return false;
-            ServerAddress = readVarString.Result;
-
-            var readUshort = client.StreamReader.ReadUShort();
-            if (!readVarInt) return false;
-            ServerPort = readUshort.Result;
-            
-            readVarInt = client.StreamReader.ReadVarInt();
-            if (!readVarInt) return false;
-            if (Enum.IsDefined(typeof(NextState), readVarInt.Result))
-                NextState = (NextState)readVarInt.Result;
-            else return false;
-
-            return true;
-        }
-
-        internal override void GeneratePacketData(RemoteClient client)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

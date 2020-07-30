@@ -25,6 +25,9 @@ namespace SLUM.lib.Client.Protocol.Alpha51
             throw new NotImplementedException();
         }
 
-
+        public void TickLogin()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

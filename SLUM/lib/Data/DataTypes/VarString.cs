@@ -1,68 +1,43 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.IO;
-//using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
-//namespace SLUM.lib.Data.DataTypes
-//{
-//    public class VarString: IData
-//    {
+namespace SLUM.lib.Data.DataTypes
+{
+    public class VarString : IDataType
+    {
 
-//        private string _data;
-//        private byte[] _cache;
-//        private bool _cache_dirty = false;
-//        public string Data
-//        {
-//            get { return _data; }
-//            set { _data = value; _cache_dirty = true; }
-//        }
+        protected string _data;
+        public string Data { get { return _data; } set { _data = checkString(value); } }
 
-//        public byte[] ByteData
-//        {
-//            get
-//            {
-//                if (_cache_dirty)
-//                {
-//                    _cache = UTF8Encoding.UTF8.GetBytes(Data);
-//                    _cache_dirty = false;
-//                }
-//                return _cache;
-//            }
-//        }
+        public int Length { get { return _data.Length; } }
+        public int MaxLength { get; set; }
 
-//        public VarInt Length
-//        {
-//            get
-//            {
-//                if (_cache_dirty)
-//                {
-//                    _cache = UTF8Encoding.UTF8.GetBytes(Data);
-//                    _cache_dirty = false;
-//                }
-//                return _cache.Length;
-//            }
-//        }
+        public VarString()
+        {
+            MaxLength = 32767;
+            _data = "";
+        }
 
-//        public byte[] GeneratePacketData()
-//        {
-//            ByteWriter bw = new ByteWriter();
-//            bw.Write(Length);
-//            bw.Write(ByteData);
-//            return bw.GetArray();
-//        }
+        public VarString(string text) : this()
+        {
+            _data = text;
+        }
 
-//        public VarString() { }
+        protected virtual string checkString(string data)
+        {
+            if (!checkLength(data))
+                return data.Substring(0, MaxLength);
+            return data;
+        }
+        protected bool checkLength(string data)
+        {
+            return data.Length <= MaxLength;
+        }
 
-//        public VarString(string text)
-//        {
-//            Data = text;
-//        }
+        public static implicit operator VarString(string value) => new VarString(value);
+        public static implicit operator string(VarString value) => value.Data;
 
-
-//        public static implicit operator VarString(string value) => new VarString(value);
-//        public static implicit operator string(VarString value) => value.Data;
-
-
-
-//    }
-//}
+    }
+}

@@ -4,27 +4,15 @@ using System.Text;
 
 namespace SLUM.lib.Client.Protocol.Netty.StatusState.ServerBound
 {
-    public class StatusPing : Packet
+    public struct StatusPing : IPacket
     {
-        public static new int PacketID => 0x00;
+        public static int PacketID => 0x01;
+        public int GetPacketID => PacketID;
+        public bool PacketGood { get; set; }
+        public int PacketLength { get; set; }
 
-        public long StatusPingPayload { get; private set; }
+        [PacketField(0, Data.DataTypes.Types.Long)]
+        public long StatusPingPayload { get; set; }
 
-        public StatusPing()
-        {
-            PacketGood = false;
-        }
-        public override void TryReadStream(RemoteClient client)
-        {
-            var readVarLong = client.StreamReader.ReadLong();
-            if (!readVarLong) { client.Disconnect(); return; }
-            StatusPingPayload = readVarLong.Result;
-            PacketGood = true;
-        }
-
-        internal override void GeneratePacketData(RemoteClient client)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SLUM.lib.Client;
 using StormLib;
 using StormLib.Module;
 
@@ -8,7 +9,7 @@ namespace SLUM.lib.Modules
 {
     class Debugging : IModuleLoader
     {
-        public static void SyncError(Client.RemoteClient Sender, Dictionary<String, Object> ErrorLog0, Dictionary<String, Object> ErrorLog1, Dictionary<String, Object> ErrorLog2)
+        public static void SyncError(RemoteClient Sender, Dictionary<String, Object> ErrorLog0, Dictionary<String, Object> ErrorLog1, Dictionary<String, Object> ErrorLog2)
         {
             string level = StormLib.Console.GetValue("Debugging_Level").Value;
             switch (level)
@@ -26,7 +27,7 @@ namespace SLUM.lib.Modules
             }
         }
 
-        public static void LogError(Client.RemoteClient Sender, Dictionary<String, Object> ErrorLog0, Dictionary<String, Object> ErrorLog1, Dictionary<String, Object> ErrorLog2)
+        public static void LogError(RemoteClient Sender, Dictionary<String, Object> ErrorLog0, Dictionary<String, Object> ErrorLog1, Dictionary<String, Object> ErrorLog2)
         {
 
         }

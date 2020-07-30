@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using SLUM.lib.Client.Protocol.Netty;
+using SLUM.lib.Client.Protocol.Netty.AnyState.ClientBound;
+using SLUM.lib.Client.Protocol.Netty.HandshakeState.ServerBound;
 using SLUM.lib.Data;
 using SLUM.lib.Data.DataTypes;
 
@@ -79,14 +81,20 @@ namespace SLUM.lib.Client.Protocol
             if (Length.Sucess && PacketID.Sucess && PacketID.Result == 0x00)
             {
                 // Handshake packet 0x00 
-                Handshake handshake = new Handshake(Client);
+                IPacket handshake = new Handshake();
+                handshake.PacketLength = Length.Result;
+                PacketManager.ReadFromClient(Client, ref handshake);
                 if (handshake.PacketGood)
                 {
                     // We try and setup the correct protocol class then 
-                    switch (handshake.ProtocolVersion)
+                    switch (((Handshake)handshake).ProtocolVersion)
                     {
                         case 736:
                             Client.ClientProtocol = new Netty736.Protocol(Client);
+                            break;
+
+                        case 578:
+                            Client.ClientProtocol = new Netty578.Protocol(Client);
                             break;
 
                         default:
@@ -112,8 +120,8 @@ namespace SLUM.lib.Client.Protocol
 
                     break;
                 case NetworkProtocol.JavaNetty:
-                    Packet Disconnect = new Disconnect(Reason);
-                    Disconnect.SendPacket(Client);
+                    var Disconnect = new Disconnect() { Reason = new Chat(Reason) };
+                    PacketManager.WriteToClient(Client, Disconnect);
                     break;
 
                 case NetworkProtocol.BedrockRaknet:
@@ -125,6 +133,11 @@ namespace SLUM.lib.Client.Protocol
         }
 
         public void TickStatus()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TickLogin()
         {
             throw new NotImplementedException();
         }

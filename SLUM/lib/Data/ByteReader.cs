@@ -183,53 +183,65 @@ namespace SLUM.lib.Data
             return result;
         }
 
-        public ExecutionState<string> ReadVarString()
+        public ExecutionState<VarString> ReadVarString(int MaxLength)
         {
             var stateLen = ReadVarInt();
-            if (!stateLen) return ExecutionState<string>.Failed("Failed to read Length");
+            if (!stateLen) return ExecutionState<VarString>.Failed("Failed to read Length");
             var length = stateLen.Result;
+            if (length > MaxLength) return ExecutionState<VarString>.Failed("String length longer than allowed");
             var stateData = ReadBytes(length);
-            if (!stateData) return ExecutionState<string>.Failed("Failed to read Data off of length");
-            return ExecutionState<string>.Succeeded(_encoder.GetString(stateData.Result));
+            if (!stateData) return ExecutionState<VarString>.Failed("Failed to read Data off of length");
+            return ExecutionState<VarString>.Succeeded(_encoder.GetString(stateData.Result));
         }
 
-        public ExecutionState<int> ReadVarInt()
+        public ExecutionState<FixedString> ReadFixedString(int MaxLength)
+        {
+            var stateLen = ReadInt();
+            if (!stateLen) return ExecutionState<FixedString>.Failed("Failed to read Length");
+            var length = stateLen.Result;
+            if (length > MaxLength) return ExecutionState<FixedString>.Failed("String length longer than allowed");
+            var stateData = ReadBytes(length);
+            if (!stateData) return ExecutionState<FixedString>.Failed("Failed to read Data off of length");
+            return ExecutionState<FixedString>.Succeeded(_encoder.GetString(stateData.Result));
+        }
+
+        public ExecutionState<VarInt> ReadVarInt()
         {
             int result = 0;
             int numRead = 0;
             byte read;
             do
             {
-                if (!_connection.DataAvaliable) return ExecutionState<int>.Failed("Failed to read VarInt length");
+                if (!_connection.DataAvaliable) return ExecutionState<VarInt>.Failed("Failed to read VarInt length");
                 read = _readByte();
                 int value = ((byte)read & 0b01111111);
                 result |= (value << (7 * numRead));
 
                 numRead++;
                 if (numRead > 5)
-                    return ExecutionState<int>.Failed("Length too long"); ;
+                    return ExecutionState<VarInt>.Failed("Length too long"); ;
             } while ((read & 0b10000000) != 0);
 
-            return ExecutionState<int>.Succeeded(result);
+            return ExecutionState<VarInt>.Succeeded(result);
         }
-        public ExecutionState<long> ReadVarLong()
+        public ExecutionState<VarLong> ReadVarLong()
         {
             long result = 0;
             int numRead = 0;
             byte read;
             do
             {
-                if (!_connection.DataAvaliable) return ExecutionState<long>.Failed("Failed to read VarLong length");
+                if (!_connection.DataAvaliable) return ExecutionState<VarLong>.Failed("Failed to read VarLong length");
                 read = _readByte();
                 long value = ((byte)read & 0b01111111);
                 result |= value << (7 * numRead);
 
                 numRead++;
                 if (numRead > 10)
-                    return ExecutionState<long>.Failed("Length too long"); ;
+                    return ExecutionState<VarLong>.Failed("Length too long"); ;
             } while ((read & 0b10000000) != 0);
 
-            return ExecutionState<long>.Succeeded(result);
+            return ExecutionState<VarLong>.Succeeded(result);
         }
     }
 }

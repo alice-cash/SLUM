@@ -15,7 +15,8 @@ namespace SLUM.lib.Data.DataTypes
         Long,
         Float,
         Double,
-        String,
+        VarString,
+        FixedString,
         Chat,
         Identifyer,
         VarInt,
@@ -26,6 +27,11 @@ namespace SLUM.lib.Data.DataTypes
         Position,
         Angle,
         UUID,
-
+        EnumNextState,
+        UInt,
+        ULong,
+        SByte,
+        ByteArray,
+        Identifier,
     }
 }

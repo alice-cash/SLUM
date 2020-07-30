@@ -1,28 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SLUM.lib.Data.DataTypes;
 
 namespace SLUM.lib.Client.Protocol.Netty.StatusState.ClientBound
 {
-    public class StatusResponse : Packet
+    public struct StatusResponse : IPacket
     {
-        public static new int PacketID => 0x01;
+        public static int PacketID => 0x00;
+        public int GetPacketID => PacketID;
 
-        public StatusResponse()
-        {
+        [PacketField(0, Types.Chat, 32767)]
+        public Chat StatusData { get; set; }
 
-        }
-        public override void TryReadStream(RemoteClient client)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal override void GeneratePacketData(RemoteClient client)
-        {
-            string RESPONSE = "{\"version\":{\"name\":\"Wak, 1.16.x\",\"protocol\":736},\"players\":{\"max\":300,\"online\":0,\"sample\":[{\"name\":\"Wak\"" +
-                ",\"id\":\"00000000-0000-0000-0000-000000000000\"}" +
-                "]},\"description\":{\"extra\":[{\"color\":\"white\",\"text\":\"grief survival!\\n\"},{\"color\":\"dark_purple\",\"text\":\"DRAGONS!\"}],\"text\":\"\"}}";
-            client.StreamWriter.Write(RESPONSE, true);
-        }
+        public bool PacketGood { get; set; }
+        public int PacketLength { get; set; }
     }
 }
